@@ -59,9 +59,6 @@ readline.question("Inserta el tamano de la cola\n", (size) => {
 var addRecursivo= function (cola) {
 	//SE PREGUNTA EL ELEMENTO QUE SE DESEA ANADIR A LA COLA
   readline.question('"Inserta el elemento\n: ', function (item) {
-  	//CONDICION PARA SALIR DEL MENU ESCRIBIENDO 'exit' EN LA CONSOLA
-    if (item == 'exit') 
-      return readline.close(); 
 
   	//SI AL ANADIR EL ITEM RETORNA VALOR DE VERDADERO MANDA EL MENSAJE DE COLA LLENA
     if(cola.add(item)){
