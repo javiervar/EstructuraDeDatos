@@ -155,7 +155,8 @@ var menuRecursivo = function(cola) {
     });
 };
 
-
+//SE DECLARA EL OBJETO COLA DE TAMANO 5
 var cola = new Cola(5);
+//SE LLAMA AL MENU PASANDOLE EL OBJETO COLA
 menuRecursivo(cola);
 
