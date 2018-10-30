@@ -1,34 +1,45 @@
+//CLASE COLA CIRUCLAR CON SUS ATRIBUTOS
 class ColaCircular {
+    //METODO CONSTRUCTOR DE LA CLASE COLACIRCULAR
     constructor(size) {
-        this.size = size;
-        this.item = [];
-        this.front = this.size - 1;
-        this.rear = 0;
-        this.empty=true;
-        this.full = false;
+        this.size = size;//SE INICIALIZA EL TAMANO DE LA COLA CIRCULAR
+        this.item = [];//ARREGLO VACIO
+        this.front = this.size - 1;//SE INICIALIZA EL FRONT IGUAL AL TAMANO DE LA COLA
+        this.rear = 0;//SE INICIALIZA EL REAR IGUAL A 0
+        this.empty = true;//SE INICIALIZA EMPTY EN TRUE
+        this.full = false;//SE INICIALIZA FULL EN FALSE
+        //SE PONE UNDEFINED EN TODAS LAS POSICIONES VACIAS DEL ARREGLO
         for (var x = 0; x < this.size; x++) {
             this.item[x] = undefined;
         }
 
     }
-
+   
+    //METODO PUSH PARA AGREGAR UN ELEMENTO A LA COLA CIRCULAR
     Push(element) {
+
+        //SE BUSCA EL INDICE DEL ULTIMO LUGAR VACIO
         var index = -1;
         for (var x = 0; x < this.size; x++) {
-            if (this.item[x] === undefined) {
+            if (this.item[x] === undefined) {//SE VA CAMBIANDO EL VALOR DEL INDEX HASTA QUE LA CONDICION NO SE CUMPLA O SALGA DEL CICLO
                 index = x;
             }
         }
+        //SI EL INDICE ES DIFERENTE A -1 SIGNIFICA QUE AUN HAY ESPACIO EN LA COLA
         if (index != -1) {
+            //SE AGREGA EL ELEMENTO EN EL INDICE ENCONTRADO
             this.item[index] = element
+            //SE CAMBIA EL ATRIBUTO REAR POR EL INDICE DONDE SE ANADIO EL ULTIMO ELEMENTO
             this.rear = index;
-            this.empty=false;
+            //CAMBIAMOS EL ATRIBUTO EMPTY A FALSE YA QUE YA NO ESTA VACIA LA COLA
+            this.empty = false;
 
-        } else {
+        } else {//EN CASO DE QUE NO SE ENCONTRARA LUGAR MANDA MENSAJE DE COLA LLENA Y SE CAMBIA EL ATRIBUTO FULL A VERDADERO
             this.full = true;
-            console.log('Cola llena')
+            console.log('COLA LLENA')
         }
 
+        //SE VA IMPRIMIENDO LAS VARIABLES PARA IR VISUALIZANDO LAS ACCIONES
         console.log("========PUSH============")
         console.log('rear:' + this.rear)
         console.log('front:' + this.front)
@@ -37,50 +48,8 @@ class ColaCircular {
 
     }
 
-    Pop() {
-        if(this.empty){
-            console.log("COLA LLENA")
-            return;
-        }
-        
+    
 
-        this.item[this.front] = undefined;
-        this.full = false;
-        var flagVacio=true
-        for (var x = 0; x < this.size; x++) {
-            if (this.item[x] !== undefined) {
-                flagVacio=false;
-            }
-        }
-
-        if(flagVacio){
-            this.empty=true;
-            this.front = this.size-1;
-            console.log(this.item)
-            return;
-        }
-
-        if (this.front == 0) {
-          console.log("Es cero")
-           this.front = this.size-1;
-           
-        } else {
-
-             this.front -= 1;
-        }
-        
-        console.log("=========POP===========")
-        console.log('rear:' + this.rear)
-        console.log('front:' + this.front)
-        console.log(this.item)
-        console.log("======================")
-
-
-    }
-
-    get Item() {
-        return this.item
-    }
 }
 
 //AUI EMPIEZA TODO EL MENU
@@ -105,9 +74,9 @@ readline.question("Inserta el tamano de la cola circular\n", (size) => {
 //FUNCION RECURSIVA PARA PODER ELEGIR SI VA AGREGAR O QUITAR DE LA COLA
 var menuRecursivo = function(cola) {
     //SE PREGUNTA LA OPCION A ELEGIR
-    readline.question('"Elige una opcion:\n1:push\n2:pop\n3:exit\n:', function(opc) {
+    readline.question('"Elige una opcion:\n1:push\n6:exit\n:', function(opc) {
         //OPCION 3 CONDICION PARA SALIR DEL MENU
-        if (opc == 3) {
+        if (opc == 6) {
             //SE CIERRA EL READLINE
             return readline.close();
         }
@@ -117,12 +86,7 @@ var menuRecursivo = function(cola) {
             //SE LLAMA A LA FUNCION DE ANADIR PASANDOLE COMO PARAMETRO LA COLA CREADA
             addRecursivo(cola);
             //OPCION 2 PARA LLAMAR EL METODO  POP Y REMOVER EL PRIMER ELEMENTO QUE ENTRO A LA COLA
-        } else if (opc == 2) {
-            //SE LLAMA AL METODO POP DEL OBJETO COLA
-            cola.Pop();
-            //SE IMPRIME EL ARREGLO DE ITEMS DENTRO DE LA COLA
-
-        }
+        } 
 
         //SE VUELVE A LLAMAR EL MENU RECURSIVO PASANDO COMO PARAMETRO EL OBJETO COLA
         menuRecursivo(cola);
@@ -130,19 +94,19 @@ var menuRecursivo = function(cola) {
 };
 
 
+
 //FUNCION RECURSIVA PARA PEDIR LA INSERCION DE ELEMENTOS 
 var addRecursivo = function(cola) {
     //SE PREGUNTA EL ELEMENTO QUE SE DESEA ANADIR A LA COLA
-    readline.question('"Inserta el elemento o escribe "menu" para volver al menu\n: ', function(item) {
+    readline.question('"Inserta el elemento o escribe "menu" para volver al menu PRINCIPAL\n: ', function(item) {
         //CONDICION PARA SALIR DEL MENU ESCRIBIENDO 'exit' EN LA CONSOLA
         if (item == 'menu') {
             menuRecursivo(cola)
         } else {
-            cola.Push(item)
-
-            addRecursivo(cola)
+            cola.Push(item)//SE ANADE EL ELEMENTO LLAMANDO EL METODO PUSH DEL OBJETO
+            addRecursivo(cola)//SE VUELVE A LLAMAR LA MISMA FUNCION
         }
-        //SI AL ANADIR EL ITEM RETORNA VALOR DE VERDADERO MANDA EL MENSAJE DE COLA LLENA
+      
 
     });
 };
